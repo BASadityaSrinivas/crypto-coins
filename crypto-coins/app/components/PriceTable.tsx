@@ -1,51 +1,82 @@
-import React from 'react'
+'use client';
+
+import React, { useEffect, useState } from 'react';
 
 interface CoinPrice {
-  symbol: string;
+  coin_id: string;
   usd_price: number;
-  btc_price: number;
-  eth_price: number;
-  timestamp: EpochTimeStamp;
+  usd_latest_details: number;
+  created_ts: EpochTimeStamp;
 }
 
-const btc_coinPrices = [{symbol: "btc", usd_price: 23327.3237, btc_price: 1.0, eth_price: 987.23, timestamp: 1722686392},
-                        {symbol: "btc", usd_price: 23326.3237, btc_price: 1.0, eth_price: 986.23, timestamp: 1722676392},
-                        {symbol: "btc", usd_price: 23325.3237, btc_price: 1.0, eth_price: 985.23, timestamp: 1722666392},
-                        {symbol: "btc", usd_price: 23324.3237, btc_price: 1.0, eth_price: 984.23, timestamp: 1722656392},
-                        {symbol: "btc", usd_price: 23323.3237, btc_price: 1.0, eth_price: 983.23, timestamp: 1722646392}];
+interface PriceTableProps {
+  coinId: string;
+}
 
+export const PriceTable = ({ coinId }: PriceTableProps) => {
+  const [coinPrices, setCoinPrices] = useState<CoinPrice[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const PriceTable = () => {
-  const coinPrices: CoinPrice[] = btc_coinPrices;
+  useEffect(() => {
+    const fetchPricesData = async () => {
+      console.log("Coin ID: ", coinId)
+      try {
+        const response = await fetch(`/api/prices?coin_id=${coinId}`);
+        if (response.ok) {
+          const data: CoinPrice[] = await response.json();
+          console.log(data)
+          setCoinPrices(data);
+        } else {
+          console.error('Failed to fetch prices data');
+        }
+      } catch (error) {
+        console.error('Error fetching prices data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  function epochToJsDate(ts: EpochTimeStamp){
-    let utcString = new Date(ts*1000).toUTCString();
+    fetchPricesData();
+  }, [coinId]);
+
+  function epochToJsDate(ts: EpochTimeStamp) {
+    let utcString = new Date(ts).toUTCString();
     return utcString.slice(4, -4);
-}
+  }
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 8,
+      maximumFractionDigits: 8,
+    }).format(amount);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex">
-      <table className='table table-sm mx-20 mt-8 p-10 table-pin-rows'> 
+      <table className='table table-sm mx-20 mt-8 p-10 table-pin-rows'>
         <thead>
           <tr>
             <th>USD Price</th>
-            <th>BTC Price</th>
-            <th>ETH Price</th>
-            <th>Date & Time</th>
+            <th>Date & Time (UTC ±0:00)</th>
           </tr>
         </thead>
         <tbody>
-          {coinPrices.map(currentPrice => 
-            <tr className="hover:bg-base-content hover:text-[white]">
-              <td>{currentPrice.usd_price}</td>
-              <td>{currentPrice.btc_price}</td>
-              <td>{currentPrice.eth_price}</td>
-              <td>{epochToJsDate(currentPrice.timestamp)}</td>
+          {coinPrices.map((currentPrice, index) => (
+            <tr key={index} className="hover:bg-base-content hover:text-[white]">
+              <td className='font-bold'>{formatCurrency(currentPrice.usd_price || currentPrice.usd_latest_details)}</td>
+              <td>{epochToJsDate(currentPrice.created_ts)}</td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>
-  )}
+  );
+};
 
-export default PriceTable
+export default PriceTable;
