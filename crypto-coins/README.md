@@ -9,12 +9,9 @@ Vanakkam 🙏 I'm Aditya Srinivas, and I'm excited to welcome you to Crypto-Coin
 5. **Configure Environment Variables:** Add a `.env` file with values
 
 ## Building and Testing 🚧
-1. **Build for Production**:  
-   Run the production build to prepare your app for deployment.  
-   `npm run build`
-2. **Start the App**:  
-   Start the app in production mode to see it in action.  
-   `npm start`
+1. **Build for Developement**:  
+   Run the development command to start the app.
+   `npm run dev`
 
 ## If Using a New MongoDB Database 🌱
 1. **Start the Server**
