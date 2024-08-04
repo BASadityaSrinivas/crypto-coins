@@ -18,8 +18,20 @@ Vanakkam 🙏 I'm Aditya Srinivas, and I'm excited to welcome you to Crypto-Coin
 2. **Initialize the Database**:  
    Visit `localhost:3000/api/init` in your browser to initialize the database with all the required coin data. This step sets up your database with the necessary info.
 
+## Look and Feel
+- **UI**
+![First Page](https://github.com/user-attachments/assets/816c6ef4-df24-42ed-8f77-b8a01f8ebe23)
+
+- **Real-time Price Tracking**
+![Price Track Table](https://github.com/user-attachments/assets/bd4a9ffe-2e40-462a-9d8d-ba8ae72bf17d)
+
+- **Subreddit Links**
+![Reddit open](https://github.com/user-attachments/assets/e51bf3a8-9ef3-4b76-93a8-0dc5f74f9520)
+![Reddit Showcase](https://github.com/user-attachments/assets/f3377211-0136-4289-8724-846aa7b2d9e7)
+
+
 ## Project Overview 🌟
-Crypto-Coins is a application built to fetch and display real-time cryptocurrency information. 
+Crypto-Coins is an application built to fetch and display real-time cryptocurrency information. 
 - **Real-Time Coin Data**
 - **Historical Price Tracking**
 - **Subreddit Links**
