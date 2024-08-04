@@ -3,7 +3,7 @@ import clientPromise from '@/lib/mongo';
 
 let cachedData: { [key: string]: any } = {};
 let cacheTimestamp: number = 0;
-const CACHE_DURATION = 5 * 60 * 1000;
+const CACHE_DURATION = 30 * 1000;
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -14,6 +14,8 @@ export async function GET(req: NextRequest) {
 
   const cacheKey = `${coinId}_latest_prices`;
   const now = Date.now();
+
+  console.log("time cache diff: ", now - cacheTimestamp, CACHE_DURATION);
 
   if (cachedData[cacheKey] && (now - cacheTimestamp < CACHE_DURATION)) {
     return NextResponse.json(cachedData[cacheKey]);
