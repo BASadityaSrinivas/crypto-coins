@@ -1,7 +1,10 @@
 import React from 'react'
 import { CryptoTable } from './components/CryptoTable';
+import { testDatabaseConnection } from "@/app/api/test";
 
-const page = () => {
+const page = async () => {
+  const isConnected = await testDatabaseConnection();
+  
   return (
     <div >
       <div className="navbar bg-base-100">
@@ -13,6 +16,15 @@ const page = () => {
         </div>
       </div>
       <CryptoTable></CryptoTable>
+      {isConnected ? (
+          <h2 className="px-20 text-lg text-green-600">
+            You are connected to MongoDB!
+          </h2>
+        ) : (
+          <h2 className="px-20 text-lg text-red-500">
+            You are NOT connected to MongoDB.
+          </h2>
+        )}
     </div>
   )
 }
