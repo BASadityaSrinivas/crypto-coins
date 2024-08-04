@@ -6,7 +6,7 @@ const COINS = process.env.COINS;
 const API_KEY = process.env.COINGECKO_API_KEY;
 const API_URL = `https://api.coingecko.com/api/v3/simple/price?ids=${COINS}&vs_currencies=usd&precision=full`;
 
-const pollInterval = 60000;
+const pollInterval = 30000;
 
 let isPolling = false;
 
