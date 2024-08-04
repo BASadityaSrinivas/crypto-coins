@@ -3,7 +3,7 @@ import clientPromise from '@/lib/mongo';
 
 let cachedData: { [key: string]: any } = {};
 let cacheTimestamp: number = 0;
-const CACHE_DURATION = 30 * 1000;
+const CACHE_DURATION = process.env.NODE_ENV === 'development' ? 30 : 30 * 1000;
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
