@@ -12,11 +12,24 @@ interface Coin {
   image: string;
 }
 
+const startPolling = async () => {
+  try {
+    const response = await fetch('/api/startPolling');
+    console.log("Polling!!!")
+    if (!response.ok) {
+      console.error('Failed to start polling');
+    }
+  } catch (error) {
+    console.error('Error starting polling:', error);
+  }
+};
+
 export const CryptoTable = () => {
   const [coinsData, setCoinsData] = useState<Coin[]>([]);
   const router = useRouter();
 
   useEffect(() => {
+    startPolling();
     const fetchCoinsData = async () => {
       try {
         const response = await fetch('/api/coins');
