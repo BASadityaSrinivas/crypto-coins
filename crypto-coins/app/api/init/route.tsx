@@ -48,8 +48,8 @@ const fetchCoinData = async (coin: string): Promise<{ coinInfo: CoinInfo; coinPr
   });
   const coinInfo: CoinInfo = await coinInfoResponse.json() as CoinInfo;
 
-  const now = Math.floor(Date.now() / 1000); // Current epoch timestamp in seconds
-  const fourHoursAgo = now - 4 * 60 * 60; // Epoch timestamp for 4 hours ago
+  const now = Math.floor(Date.now() / 1000);
+  const fourHoursAgo = now - 4 * 60 * 60;
 
   const coinPriceResponse = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/market_chart/range?vs_currency=usd&from=${fourHoursAgo}&to=${now}`, {
     headers: {
