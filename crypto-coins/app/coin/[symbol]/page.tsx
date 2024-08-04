@@ -17,8 +17,6 @@ export default function CoinData() {
   const [coinData, setCoinData] = useState<Coin | null>(null);
   const router = useRouter();
 
-  console.log("Params: ", params);
-
   useEffect(() => {
     const fetchCoinsData = async () => {
       if (!params.symbol) {
