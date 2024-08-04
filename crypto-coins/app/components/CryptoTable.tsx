@@ -66,7 +66,7 @@ export const CryptoTable = () => {
               </td>
             </tr>
             : 
-            <p></p>
+            <p key="null"></p>
           ))}
         </tbody>
       </table>
